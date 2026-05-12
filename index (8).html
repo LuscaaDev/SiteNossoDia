@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Feliz Nosso Dia, minhaa Ana 💜</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,body{
+  height:100%;
+  overflow-x:hidden;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  color:#fff;
+  background:linear-gradient(-45deg,#1a0033,#2b0a4a,#0a0a3d,#3a0a5c,#0d0a4a);
+  background-size:400% 400%;
+  animation:bgShift 18s ease infinite;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  position:relative;
+}
+
+@keyframes bgShift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.45;
+  z-index:0;
+  pointer-events:none;
+}
+
+body::before{
+  background:#8b5cf6;
+  top:-150px;
+  left:-150px;
+  animation:float1 12s ease-in-out infinite;
+}
+
+body::after{
+  background:#3b82f6;
+  bottom:-150px;
+  right:-150px;
+  animation:float2 14s ease-in-out infinite;
+}
+
+@keyframes float1{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(80px,60px)}
+}
+
+@keyframes float2{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(-80px,-60px)}
+}
+
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+}
+
+.stage{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:650px;
+  text-align:center;
+}
+
+.card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(180,140,255,.25);
+  backdrop-filter:blur(18px);
+  border-radius:28px;
+  padding:40px 28px;
+  box-shadow:
+  0 0 40px rgba(139,92,246,.25),
+  0 0 80px rgba(59,130,246,.15),
+  inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+h1{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(2rem,6vw,3.4rem);
+  background:linear-gradient(90deg,#c4b5fd,#93c5fd,#e9d5ff);
+  -webkit-background-clip:text;
+  color:transparent;
+  margin-bottom:24px;
+  animation:titleGlow 3s ease infinite alternate;
+}
+
+@keyframes titleGlow{
+  from{
+    filter:drop-shadow(0 0 8px rgba(167,139,250,.5));
+  }
+
+  to{
+    filter:drop-shadow(0 0 22px rgba(147,197,253,.7));
+  }
+}
+
+.message{
+  font-size:1.15rem;
+  line-height:1.9;
+  font-weight:300;
+  min-height:180px;
+  white-space:pre-wrap;
+  color:#ede9fe;
+  text-shadow:0 0 12px rgba(139,92,246,.35);
+}
+
+.caret{
+  display:inline-block;
+  width:2px;
+  height:1.1em;
+  background:#c4b5fd;
+  margin-left:2px;
+  animation:blink .9s steps(2) infinite;
+}
+
+@keyframes blink{
+  50%{
+    opacity:0;
+  }
+}
+
+.btn{
+  margin-top:28px;
+  padding:14px 32px;
+  font-size:1rem;
+  font-weight:500;
+  color:#fff;
+  background:linear-gradient(135deg,#8b5cf6,#6366f1,#3b82f6);
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  transition:.3s;
+  opacity:0;
+  pointer-events:none;
+  box-shadow:
+  0 0 20px rgba(139,92,246,.6),
+  0 0 40px rgba(59,130,246,.35);
+}
+
+.btn.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.btn:hover{
+  transform:translateY(-2px) scale(1.05);
+}
+
+.fade-out{
+  animation:fadeOut .6s ease both;
+}
+
+@keyframes fadeOut{
+  to{
+    opacity:0;
+    transform:translateY(-14px);
+  }
+}
+
+.heart-scene{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  gap:24px;
+}
+
+.heart-scene.show{
+  display:flex;
+  animation:fadeIn 1s ease both;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.heart{
+  position:relative;
+  width:min(320px,80vw);
+  height:min(320px,80vw);
+  animation:pulse 1.6s ease infinite;
+}
+
+@keyframes pulse{
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.06);
+  }
+}
+
+.heart svg{
+  width:100%;
+  height:100%;
+}
+
+.heart-photos{
+  position:absolute;
+  inset:0;
+  clip-path:path('M160 290 C 60 220, 10 150, 30 90 C 50 30, 130 20, 160 80 C 190 20, 270 30, 290 90 C 310 150, 260 220, 160 290 Z');
+  display:flex;
+}
+
+.photo-half{
+  flex:1;
+  background-size:cover;
+  background-position:center;
+}
+
+.photo-half.left{
+  background-image:url('FOTO_ANA.jpg');
+}
+
+.photo-half.right{
+  background-image:url('MINHA_FOTO.jpg');
+}
+
+.heart-divider{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:2px;
+  background:rgba(255,255,255,.4);
+  transform:translateX(-50%);
+}
+
+.final-text{
+  font-family:'Dancing Script',cursive;
+  font-size:2rem;
+  color:#e9d5ff;
+}
+
+.music-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:10;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:none;
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font-size:1.2rem;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<button class="music-btn" id="musicBtn">♪</button>
+
+<audio id="bgMusic" loop>
+  <source src="samba.mp3" type="audio/mpeg">
+</audio>
+
+<div class="stage">
+
+<div class="card" id="textScene">
+
+<h1>Feliz Nosso diaaa meu amorrr 💜</h1>
+
+<div class="message" id="message"></div>
+
+<button class="btn" id="nextBtn">
+Continuar 💜
+</button>
+
+</div>
+
+<div class="heart-scene" id="heartScene">
+
+<div class="heart">
+
+<div class="heart-photos">
+<div class="photo-half left"></div>
+<div class="photo-half right"></div>
+<div class="heart-divider"></div>
+</div>
+
+<svg viewBox="0 0 320 320" fill="none">
+
+<defs>
+<linearGradient id="hg" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0%" stop-color="#a78bfa"/>
+<stop offset="100%" stop-color="#60a5fa"/>
+</linearGradient>
+</defs>
+
+<path
+d="M160 290 C 60 220, 10 150, 30 90 C 50 30, 130 20, 160 80 C 190 20, 270 30, 290 90 C 310 150, 260 220, 160 290 Z"
+stroke="url(#hg)"
+stroke-width="4"
+fill="none"
+/>
+
+</svg>
+
+</div>
+
+<div class="final-text">
+Eu te amo Muitoo, Ana 💜💙
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* PARTICLES */
+
+const canvas = document.getElementById("particles")
+const ctx = canvas.getContext("2d")
+
+let W,H
+
+function resize(){
+  W = canvas.width = innerWidth
+  H = canvas.height = innerHeight
+}
+
+resize()
+
+addEventListener("resize",resize)
+
+const hearts = Array.from({length:30},spawnHeart)
+
+function spawnHeart(){
+  return{
+    x:Math.random()*W,
+    y:Math.random()*H + H,
+    size:Math.random()*14 + 10,
+    speed:Math.random()*.6 + .3,
+    drift:(Math.random()-.5)*.4,
+    color:Math.random() < .5 ? "#a78bfa" : "#60a5fa",
+    opacity:Math.random()*.5 + .3
+  }
+}
+
+function drawHeart(x,y,size,color,opacity){
+
+  ctx.save()
+
+  ctx.translate(x,y)
+
+  ctx.scale(size/30,size/30)
+
+  ctx.globalAlpha = opacity
+
+  ctx.fillStyle = color
+
+  ctx.beginPath()
+
+  ctx.moveTo(0,8)
+
+  ctx.bezierCurveTo(0,-5,-15,-5,-15,5)
+  ctx.bezierCurveTo(-15,15,0,22,0,28)
+  ctx.bezierCurveTo(0,22,15,15,15,5)
+  ctx.bezierCurveTo(15,-5,0,-5,0,8)
+
+  ctx.fill()
+
+  ctx.restore()
+}
+
+function animate(){
+
+  ctx.clearRect(0,0,W,H)
+
+  for(const h of hearts){
+
+    h.y -= h.speed
+    h.x += h.drift
+
+    if(h.y < -30){
+      Object.assign(h,spawnHeart(),{
+        y:H + 20
+      })
+    }
+
+    drawHeart(h.x,h.y,h.size,h.color,h.opacity)
+  }
+
+  requestAnimationFrame(animate)
+}
+
+animate()
+
+/* STORY */
+
+const messages = [
+
+{
+text:`desde que eu te conheci tudo vem melhorado na minha vida 💜
+vc alegra todos os meus dias de uma maneira inexplicável...
+Eu te amo mais que tudo meu amor 💙`,
+btn:"Continuar 💜"
+},
+
+{
+text:`Você é a melhor pessoa e mais linda desse mundooo 💜
+Eu amo demaissss cada traço seu...
+Você é simplesmente perfeita ✨
+o seu sorriso é incrivel, a cor dos seus olhos me fascinam, toda vez que olho pra eles eu me ja me sinto muitooo amado 💙`
+
+,
+btn:"Continuar lendo 💜"
+},
+
+{
+text:`Eu amo muito o seu jeitinho 💜
+É simplesmente perfeito...
+A coisa mais linda e pura desse mundo 💙`,
+btn:"Continuar lendo 💜"
+},
+
+{
+text:`Eu amo passar meu tempo com você 💜
+É a melhor coisa do mundo...
+Eu amo os nossos momentos juntos, é com certeza oq eu mais valorizo meu amorrr 💙`,
+btn:"Continuar Lendo 💜"
+},
+
+{
+text:`Resumindo...
+Tudo em você é perfeitoooo 💜
+Eu quero estar do seu lado até o último dia da minha vida 💙
+Eu te amo mais que tudo nesse mundoooo
+Eu te amo muitoooooooo 💜✨`,
+btn:null
+}
+
+]
+
+const messageEl = document.getElementById("message")
+const btn = document.getElementById("nextBtn")
+const textScene = document.getElementById("textScene")
+const heartScene = document.getElementById("heartScene")
+
+let idx = 0
+let typingTimeout
+
+function typeText(text,cb){
+
+  messageEl.innerHTML = ""
+
+  const caret = document.createElement("span")
+
+  caret.className = "caret"
+
+  let i = 0
+
+  function step(){
+
+    if(i <= text.length){
+
+      messageEl.textContent = text.slice(0,i)
+
+      messageEl.appendChild(caret)
+
+      i++
+
+      typingTimeout = setTimeout(step,60)
+
+    }else{
+
+      caret.remove()
+
+      cb && cb()
+
+    }
+
+  }
+
+  step()
+}
+
+function showMessage(i){
+
+  const m = messages[i]
+
+  btn.classList.remove("show")
+
+  typeText(m.text,()=>{
+
+    if(m.btn){
+
+      btn.textContent = m.btn
+
+      btn.classList.add("show")
+
+    }else{
+
+      setTimeout(showHeart,850)
+
+    }
+
+  })
+
+}
+
+function showHeart(){
+
+  textScene.classList.add("fade-out")
+
+  setTimeout(()=>{
+
+    textScene.style.display = "none"
+
+    heartScene.classList.add("show")
+
+  },600)
+
+}
+
+btn.addEventListener("click",()=>{
+
+  clearTimeout(typingTimeout)
+
+  messageEl.classList.add("fade-out")
+
+  btn.classList.remove("show")
+
+  setTimeout(()=>{
+
+    messageEl.classList.remove("fade-out")
+
+    idx++
+
+    if(idx < messages.length){
+      showMessage(idx)
+    }
+
+  },500)
+
+})
+
+showMessage(0)
+
+const audio = document.getElementById("bgMusic")
+const musicBtn = document.getElementById("musicBtn")
+
+let playing = false
+
+function startMusic(){
+
+  audio.play().catch(()=>{})
+
+  musicBtn.textContent = "❚❚- Pausar a musica"
+
+  playing = true
+
+}
+
+setTimeout(() => {
+
+  startMusic()
+
+},1000)
+
+document.addEventListener("click", startMusic, { once:true })
+
+musicBtn.addEventListener("click",()=>{
+
+  if(playing){
+
+    audio.pause()
+
+    musicBtn.textContent = "♪"
+
+  }else{
+
+    audio.play().catch(()=>{})
+
+    musicBtn.textContent = "❚❚- Pausar a Musica"
+
+  }
+
+  playing = !playing
+
+})
+
+
+</script>
+
+</body>
+</html>
